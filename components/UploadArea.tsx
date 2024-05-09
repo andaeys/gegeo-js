@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
 import styles from './UploadArea.module.css'; 
+import { validateGeoJSONFile } from '../utils/jsonValidation';
 
 const UploadArea: React.FC = () => {
     const [isDragging, setIsDragging] = useState(false);
+    const [isValidFile, setIsValidFile] = useState<boolean | null>(null);
 
     const handleDragEnter = () => setIsDragging(true);
     const handleDragLeave = () => setIsDragging(false);
@@ -11,16 +13,28 @@ const UploadArea: React.FC = () => {
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         setIsDragging(false);
-        const file = event.dataTransfer.files[0];
-        // Handle dropped file
-        console.log('File dropped:', file);
+        
+        // console.log('File dropped:', file);
+        handleFile(event.target.files[0]); 
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files[0];
-        // Handle selected file
-        console.log('File selected:', file);
+        // console.log('File selected:', file);
+        handleFile(event.target.files[0]); 
     };
+
+    const handleFile = (file: File) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const fileContent = event.target?.result as string;
+            const isValid = validateGeoJSONFile(fileContent);
+            setIsValidFile(isValid);
+            console.log(`File validation result: ${isValid}`);
+        };
+        reader.readAsText(file); // Read file as text
+    };
+
 
     return (
         <div className={styles.uploadAreaContainer}> {}
