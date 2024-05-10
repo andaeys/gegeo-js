@@ -20,7 +20,10 @@ const UploadArea: React.FC = () => {
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleFile(event.target.files[0]);
+        var files = event.target.files;
+        if(files!=null) {
+            handleFile(files[0]);
+        }
     };
 
     const handleFile = (file: File) => {
