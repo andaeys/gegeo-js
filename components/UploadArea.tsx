@@ -31,7 +31,7 @@ const UploadArea: React.FC = () => {
             const fileContent = event.target?.result as string;
             const isValid = validateGeoJSONFile(fileContent);
             setIsValidFile(isValid);
-            setGeoJSONData(fileContent); // Set GeoJSON data for visualization
+            setGeoJSONData(fileContent); 
             console.log(`File validation result: ${isValid}`);
             if (!isValid) {
                 setShowErrorDialog(true);
