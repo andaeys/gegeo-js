@@ -19,12 +19,12 @@ const MapViewer = ({ onClose, geoJSONData }: { onClose: () => void; geoJSONData:
 
             const bounds = new mapboxgl.LngLatBounds();
 
-            geoJSON.features.forEach((feature) => {
+            geoJSON.features.forEach((feature: any) => {
                 if (feature.geometry.type === 'Point') {
                     bounds.extend(feature.geometry.coordinates);
                 } else if (feature.geometry.type === 'LineString' || feature.geometry.type === 'Polygon') {
-                    feature.geometry.coordinates.forEach((coord) => {
-                        coord.forEach((point) => {
+                    feature.geometry.coordinates.forEach((coord: any) => {
+                        coord.forEach((point: any) => {
                             bounds.extend(point);
                         });
                     });
