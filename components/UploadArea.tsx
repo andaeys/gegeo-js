@@ -8,6 +8,7 @@ const UploadArea: React.FC = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [isValidFile, setIsValidFile] = useState<boolean | null>(null);
     const [geoJSONData, setGeoJSONData] = useState<string>('');
+    const [showErrorDialog, setShowErrorDialog] = useState<boolean>(false);
 
     const handleDragEnter = () => setIsDragging(true);
     const handleDragLeave = () => setIsDragging(false);
@@ -32,6 +33,9 @@ const UploadArea: React.FC = () => {
             setIsValidFile(isValid);
             setGeoJSONData(fileContent); // Set GeoJSON data for visualization
             console.log(`File validation result: ${isValid}`);
+            if (!isValid) {
+                setShowErrorDialog(true);
+            }
         };
         reader.readAsText(file);
     };
@@ -39,6 +43,7 @@ const UploadArea: React.FC = () => {
     const handleCloseDialog = () => {
         setIsValidFile(null);
         setGeoJSONData('');
+        setShowErrorDialog(false);
     };
 
     return (
@@ -62,6 +67,14 @@ const UploadArea: React.FC = () => {
             </div>
             {isValidFile && (
                 <MapViewer onClose={handleCloseDialog} geoJSONData={geoJSONData} />
+            )}
+            {showErrorDialog && (
+                <div className={styles.popup}>
+                    <div className={styles.popupContent}>
+                        <p>Invalid JSON file. Please upload a valid GeoJSON file.</p>
+                        <button onClick={handleCloseDialog}>OK</button>
+                    </div>
+                </div>
             )}
         </div>
     );
