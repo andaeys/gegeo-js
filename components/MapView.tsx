@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl'
 import styles from './MapViewer.module.css'
 
+const mToken = process.env.MAP_BOX_TOKEN;
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGFwZXBlcyIsImEiOiJjbHZ6emp1YmUzM3VjMmpteG1iZ21namhyIn0.NOdtJVHNGuQMPlS--dNGRQ';
 
 const MapViewer = ({ onClose, geoJSONData }: { onClose: () => void; geoJSONData: string }) => {
