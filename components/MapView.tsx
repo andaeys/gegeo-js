@@ -18,7 +18,7 @@ const MapViewer = ({ onClose, geoJSONData }: { onClose: () => void; geoJSONData:
 
             const bounds = new mapboxgl.LngLatBounds();
 
-            geoJSON.features.forEach((feature: Feature) => {
+            geoJSON.features.forEach((feature) => {
                 if (feature.geometry.type === 'Point') {
                     bounds.extend(feature.geometry.coordinates);
                 } else if (feature.geometry.type === 'LineString' || feature.geometry.type === 'Polygon') {
